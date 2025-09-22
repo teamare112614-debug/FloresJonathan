@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ramo de girasoles</title>
+  <style>
+    body {
+      background: #0b0f14;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      color: #ffd54a;
+      font-family: sans-serif;
+    }
+    h1 {
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #ffd54a;
+    }
+    svg {
+      width: 500px;
+      height: 500px;
+    }
+    .petal, .center, .stem, .leaf {
+      opacity: 0;
+      transform: scale(0.2);
+      transform-origin: center;
+      animation: grow 0.6s forwards;
+    }
+    @keyframes grow {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Para mi Amiwis Stacy💛</h1>
+
+  <svg viewBox="0 0 400 400">
+    <!-- plantilla girasol -->
+    <g id="sunflower-template" style="display:none">
+      <!-- pétalos distribuidos en círculo alrededor del (0,0) -->
+      <g>
+        <!-- repetimos 12 veces, cada uno rotado 30° -->
+        <g transform="rotate(0,0,0)">
+          <ellipse class="petal" cx="0" cy="-50" rx="15" ry="30" fill="#ffeb3b" />
+        </g>
+        <g transform="rotate(30,0,0)">
+          <ellipse class="petal" cx="0" cy="-50" rx="15" ry="30" fill="#ffeb3b" />
+        </g>
+        <g transform="rotate(60,0,0)">
+          <ellipse class="petal" cx="0" cy="-50" rx="15" ry="30" fill="#ffeb3b" />
+        </g>
+        <g transform="rotate(90,0,0)">
+          <ellipse class="petal" cx="0" cy="-50" rx="15" ry="30" fill="#ffeb3b" />
+        </g>
+        <g transform="rotate(120,0,0)">
+          <ellipse class="petal" cx="0" cy="-50" rx="15" ry="30" fill="#ffeb3b" />
+        </g>
+        <g transform="rotate(150,0,0)">
+          <ellipse class="petal" cx="0" cy="-50" rx="15" ry="30" fill="#ffeb3b" />
+        </g>
+        <g transform="rotate(180,0,0)">
+          <ellipse class="petal" cx="0" cy="-50" rx="15" ry="30" fill="#ffeb3b" />
+        </g>
+        <g transform="rotate(210,0,0)">
+          <ellipse class="petal" cx="0" cy="-50" rx="15" ry="30" fill="#ffeb3b" />
+        </g>
+        <g transform="rotate(240,0,0)">
+          <ellipse class="petal" cx="0" cy="-50" rx="15" ry="30" fill="#ffeb3b" />
+        </g>
+        <g transform="rotate(270,0,0)">
+          <ellipse class="petal" cx="0" cy="-50" rx="15" ry="30" fill="#ffeb3b" />
+        </g>
+        <g transform="rotate(300,0,0)">
+          <ellipse class="petal" cx="0" cy="-50" rx="15" ry="30" fill="#ffeb3b" />
+        </g>
+        <g transform="rotate(330,0,0)">
+          <ellipse class="petal" cx="0" cy="-50" rx="15" ry="30" fill="#ffeb3b" />
+        </g>
+      </g>
+
+      <!-- centro -->
+      <circle class="center" cx="0" cy="0" r="25" fill="#5d4037" />
+
+      <!-- tallo -->
+      <rect class="stem" x="-5" y="25" width="10" height="120" fill="#388e3c" />
+
+      <!-- hojas (izquierda y derecha) -->
+      <ellipse class="leaf" cx="-30" cy="80" rx="25" ry="12" fill="#4caf50" />
+      <ellipse class="leaf" cx="30" cy="100" rx="25" ry="12" fill="#4caf50" />
+    </g>
+
+    <!-- ramo -->
+    <use href="#sunflower-template" transform="translate(100,150) scale(1)" />
+    <use href="#sunflower-template" transform="translate(200,130) scale(1.1)" />
+    <use href="#sunflower-template" transform="translate(300,160) scale(0.9)" />
+    <use href="#sunflower-template" transform="translate(160,220) scale(1)" />
+    <use href="#sunflower-template" transform="translate(240,240) scale(0.95)" />
+  </svg>
+
+  <script>
+    // animación escalonada para cada flor
+    const flowers = document.querySelectorAll("use");
+    flowers.forEach((flower, i) => {
+      const clone = document.querySelector("#sunflower-template").cloneNode(true);
+      clone.style.display = "block";
+      clone.removeAttribute("id");
+
+      const delayBase = i * 1.5;
+      clone.querySelectorAll(".petal").forEach((p, j) => {
+        p.style.animationDelay = `${delayBase + j * 0.1}s`;
+      });
+      clone.querySelector(".center").style.animationDelay = `${delayBase + 1.5}s`;
+      clone.querySelector(".stem").style.animationDelay = `${delayBase + 1.9}s`;
+      clone.querySelectorAll(".leaf").forEach((l, j) => {
+        l.style.animationDelay = `${delayBase + 2.3 + j * 0.3}s`;
+      });
+
+      // aplicar la transformación del <use>
+      const transform = flower.getAttribute("transform");
+      clone.setAttribute("transform", transform);
+
+      flower.parentNode.appendChild(clone);
+    });
+
+    // eliminar los <use> de referencia
+    document.querySelectorAll("use").forEach(u => u.remove());
+  </script>
+</body>
+</html>
